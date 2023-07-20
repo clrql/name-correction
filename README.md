@@ -8,11 +8,16 @@ function levenshteinDistance(str1, str2) {
   for (let i = 0; i <= m; i++) {
     dp[i] = [];
     for (let j = 0; j <= n; j++) {
+      // Base cases: If one of the strings is empty, the distance is the length of the other string.
       if (i === 0) {
         dp[i][j] = j;
       } else if (j === 0) {
         dp[i][j] = i;
       } else {
+        // Calculate the minimum distance for the current position based on three possible operations:
+        // 1. Replace: If the characters at the current positions are different, add 1 to the previous diagonal value.
+        // 2. Insert: Add 1 to the value on the previous row at the same column.
+        // 3. Delete: Add 1 to the value on the same row at the previous column.
         dp[i][j] = Math.min(
           dp[i - 1][j - 1] + (str1[i - 1] === str2[j - 1] ? 0 : 1),
           dp[i - 1][j] + 1,
@@ -21,12 +26,13 @@ function levenshteinDistance(str1, str2) {
       }
     }
   }
-  return dp[m][n];
+  return dp[m][n]; // The last cell of the matrix holds the Levenshtein distance.
 }
 ```
 
 Function to look for the most similar name.
 ```javascript
+// Function to find the most similar name from a list of names to the given incorrect name.
 function findMostSimilarName(incorrectName, nameList) {
   const incorrectNameComponents = incorrectName.split(/\s+/);
   let bestMatch = null;
@@ -38,6 +44,7 @@ function findMostSimilarName(incorrectName, nameList) {
     for (const incorrectComponent of incorrectNameComponents) {
       let minComponentDistance = Infinity;
       for (const nameComponent of fullNameComponents) {
+        // Calculate the Levenshtein distance between each component of the incorrect name and each component of the full name.
         const distance = levenshteinDistance(
           incorrectComponent.toLowerCase(),
           nameComponent.toLowerCase()
@@ -49,12 +56,13 @@ function findMostSimilarName(incorrectName, nameList) {
       }
       totalDistance += minComponentDistance;
     }
+    // Update the best match if the current full name has a smaller total distance than the previous best match.
     if (totalDistance < minDistance) {
       minDistance = totalDistance;
       bestMatch = fullName;
     }
   }
-  return bestMatch;
+  return bestMatch; // Return the most similar name found.
 }
 ```
 
