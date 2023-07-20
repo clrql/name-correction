@@ -1,3 +1,9 @@
+# Name Correction
+Contents:
+- `levenshteinDistance`: A function that calculates the Levenshtein Distance between two strings using dynamic programming.
+- `findMostSimilarName`: A function that takes an incorrect name and a list of names, and returns the most similar name from the list based on the Levenshtein Distance.
+- An example of how to use the functions with sample names and output.
+
 Levenshtein Distance implementation usign a dynammic programming approach.
 ```javascript
 function levenshteinDistance(str1, str2) {
